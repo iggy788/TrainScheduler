@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Click Button with Firebase!</title>
+
+    <!--Linking Firebase to Site -->
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+
+</head>
+
+<body>
+
+    <!--Not sure where this is housed but its defintley storing how many times the button was clicked -->
+    <h1>Ouch! You've clicked me <span id="click-value"></span> times!</h1>
+
+    <!-- Button -->
+    <button id="click-button">Click Me!!!!</button>
+
+    <!--Linking jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- ================================================================================== -->
+    <script>
+        //Intialize Firebase
+        // This code was copied from our app page
+        var config = {
+            apiKey: "AIzaSyAJLU3cuLrT_d4om25fHs7pny_GKzhfDxY",
+            authDomain: "testing-firebase-7db6c.firebaseapp.com",
+            databaseURL: "https://testing-firebase-7db6c.firebaseio.com",
+            projectId: "testing-firebase-7db6c",
+            storageBucket: "testing-firebase-7db6c.appspot.com",
+            messagingSenderId: "751647189459"
+        };
+
+        // This will connect you to your database
+        firebase.initializeApp(config);
+
+        // VARIABLES
+        // --------------------------------------------------------------------------------
+        // Get a reference to the database service
+        var database = firebase.database();
+        // Setting intitial value of our click counter variable to 0
+        var clickCounter = 0;
+
+        // FUNCTIONS + EVENTS
+        // --------------------------------------------------------------------------------
+        // On Click of Button
+        $("#click-button").on("click", function() {
+            clickCounter++;
+            database.ref().set({
+                clickCount: clickCounter
+            });
+        });
+
+        // MAIN PROCESS + INITIAL CODE
+        // --------------------------------------------------------------------------------
+        // When the value event is triggered which happens when someone makes a change and the snapshot part will give you the data in its current state when the event ran in the database when this function occurs
+        // This type of event is unique to firebase
+        database.ref().on("value", function(snapshot) {
+            console.log(snapshot.val());
+            $("#click-value").text(snapshot.val().clickCount);
+            clickCounter = snapshot.val().clickCount;
+        }, function(errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        });
+    </script>
+
+</body>
+
+</html>
