@@ -28,10 +28,8 @@ $('document').ready(function() {
         // Grabs user input
         var trainName = $('#train-name-input').val().trim();
         var trainDestination = $('#destination-input').val().trim();
-        //var trainStart = moment($('#first-train-input').val().trim(), 'DD/MM/YY').format('X');
         var trainStart = moment($('#first-train-input').val().trim(), 'hh:mm').format('X');
         //var trainStart = moment($('#first-train-input').val().trim(), "hh:mm").subtract(1, "years");
-        //console.log('Time Train Starts ' + trainStart);
         var trainRate = $('#frequency-input').val().trim();
 
         // Creates local "temporary" object for holding train data
@@ -46,10 +44,10 @@ $('document').ready(function() {
         database.ref().push(newTrain);
 
         // Logs everything to console
-        //console.log(newTrain.destination);
-        //console.log(newTrain.name);
-        //console.log(newTrain.start);
-        //console.log(newTrain.rate);
+        console.log(newTrain.name);
+        console.log(newTrain.destination);
+        console.log(newTrain.start);
+        console.log(newTrain.rate);
 
         // Alert
         alert('Train successfully added');
@@ -74,44 +72,62 @@ $('document').ready(function() {
         // Train Info
         console.log(trainName);
         console.log(trainDestination);
-        console.log('CURRENT TIME TRAIN WILL ARRIVE: ' + moment.unix(trainStart).format('hh:mm A'));
+        console.log(trainStart);
         console.log(trainRate);
         // ==========================================================
+        // Calculations for when trains will arrive and how far they are away 
+
+        // First Train of the Day is 3:00 AM
+        // Assume Train comes every 7 minutes.
+        // Assume the current time is 3:16 AM....
+        // What time would the next train be...? (Use your brain first)
+        // It would be 3:21 -- 5 minutes away
+
+        // ==========================================================
+
+        // Solved Mathematically
+        // Test case 2:
+        // 16 - 00 = 16
+        // 16 % 7 = 2 (Modulus is the remainder)
+        // 7 - 2 = 5 minutes away
+        // 5 + 3:16 = 3:21
+
+        // Assumptions
+
         // Next Arrival
-        // var trainStartPretty = moment.unix(trainStart).format('MM/DD/YY');
-        var trainStartPretty = moment.unix(trainStart).format('hh:mm A');
-        //console.log('FIRST TIME TRAIN ARRIVES: ' + trainStartPretty);
-
-
-        var firstTimeConverted = moment.unix(trainStart, 'hh:mm').subtract(1, 'years');
-        //var firstTimeConverted = moment(trainStart, 'hh:mm').subtract(1, 'years');
-        //console.log('FIRST ' + firstTimeConverted);
-        //console.log('FIRST ' + moment(firstTimeConverted).format('hh:mm A'));
-
-        // Current Time Right Now
-        var currentTime = moment();
-        console.log('CURRENT TIME: ' + moment(currentTime).format('hh:mm A'));
+        var trainStartPretty = moment.unix(trainStart).format('MM/DD/YY');
+        //var trainStartPretty = moment.unix(trainStart).format("hh:mm"));
 
         // Minutes Away
-        // Difference between the times or Minutes Away
-        var diffTime = moment().diff(moment.unix(trainStart), 'minutes');
-        console.log('DIFFERENCE IN TIME: ' + diffTime);
-        // var totalMinutes = endTime.diff(startTime, 'minutes');
+        var trainMonths = moment().diff(moment.unix(trainStart, 'X'), 'months');
+        console.log(trainMonths);
+        // Difference between the times
+        // var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+        // console.log("DIFFERENCE IN TIME: " + diffTime);
 
         // Time apart (remainder)
-        var tRemainder = diffTime % trainRate;
-        //console.log('tRemainder is ' + tRemainder);
+        // var tRemainder = diffTime % tFrequency;
+        // console.log(tRemainder);
 
-        // Minutes Until Next Train
-        var nextTrain = trainRate - tRemainder;
-        //console.log('MINUTES TILL TRAIN: ' + nextTrain);
+        // Minute Until Train
+        // var tMinutesTillTrain = tFrequency - tRemainder;
+        // console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
 
         // Next Train
-        var arrivalTime = moment().add(nextTrain, "minutes").format("hh:mm A");
-        //console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm A"));
+        // var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+        // console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
         // Add each train's data into the table
-        $('#train-table > tbody').append('<tr><td>' + trainName + '</td><td>' + trainDestination + '</td><td>' + trainRate + '</td><td>' + arrivalTime + '</td><td>' + nextTrain + '</td><td>');
+        $('#train-table > tbody').append('<tr><td>' + trainName + '</td><td>' + trainDestination + '</td><td>' + trainRate + '</td><td>' + trainStartPretty + '</td><td>' + trainMonths + '</td><td>');
     });
+
+    // Example Time Math
+    // -----------------------------------------------------------------------------
+    // Assume Train start date of January 1, 2015
+    // Assume current date is March 1, 2016
+
+    // We know that this is 15 months.
+    // Now we will create code in moment.js to confirm that any attempt we use mets this test case
 
 });
