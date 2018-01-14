@@ -2,12 +2,12 @@ $('document').ready(function() {
 
     // Initialize Firebase
     var config = {
-        apiKey: "AIzaSyD_B-hi7NYG4AgL9-aroiXdBB-Cmc1W2vc",
-        authDomain: "papayas-1377f.firebaseapp.com",
-        databaseURL: "https://papayas-1377f.firebaseio.com",
-        projectId: "papayas-1377f",
-        storageBucket: "",
-        messagingSenderId: "428305439193"
+        apiKey: "AIzaSyDu03oVxNCzXDhiS3YcT6yoXE5yeNd8Zu4",
+        authDomain: "timesheet-4758a.firebaseapp.com",
+        databaseURL: "https://timesheet-4758a.firebaseio.com",
+        projectId: "timesheet-4758a",
+        storageBucket: "timesheet-4758a.appspot.com",
+        messagingSenderId: "980675643684"
     };
     firebase.initializeApp(config);
 
