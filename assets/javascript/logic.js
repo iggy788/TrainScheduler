@@ -78,15 +78,12 @@ $('document').ready(function() {
         console.log(trainRate);
         // ==========================================================
         // Next Arrival
-        // var trainStartPretty = moment.unix(trainStart).format('MM/DD/YY');
         var trainStartPretty = moment.unix(trainStart).format('hh:mm A');
         //console.log('FIRST TIME TRAIN ARRIVES: ' + trainStartPretty);
 
 
         var firstTimeConverted = moment.unix(trainStart, 'hh:mm').subtract(1, 'years');
-        //var firstTimeConverted = moment(trainStart, 'hh:mm').subtract(1, 'years');
         //console.log('FIRST ' + firstTimeConverted);
-        //console.log('FIRST ' + moment(firstTimeConverted).format('hh:mm A'));
 
         // Current Time Right Now
         var currentTime = moment();
@@ -96,7 +93,6 @@ $('document').ready(function() {
         // Difference between the times or Minutes Away
         var diffTime = moment().diff(moment.unix(trainStart), 'minutes');
         console.log('DIFFERENCE IN TIME: ' + diffTime);
-        // var totalMinutes = endTime.diff(startTime, 'minutes');
 
         // Time apart (remainder)
         var tRemainder = diffTime % trainRate;
