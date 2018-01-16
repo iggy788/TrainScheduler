@@ -28,7 +28,7 @@ $('document').ready(function() {
         // Grabs user input
         var trainName = $('#train-name-input').val().trim();
         var trainDestination = $('#destination-input').val().trim();
-        var trainStart = moment($('#first-train-input').val().trim(), 'hh:mm').format('X');
+        var trainStart = moment($('#first-train-input').val().trim(), 'DD/MM/YY').format('X');
         //var trainStart = moment($('#first-train-input').val().trim(), "hh:mm").subtract(1, "years");
         var trainRate = $('#frequency-input').val().trim();
 
